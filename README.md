@@ -1,4 +1,4 @@
-## 本项目是实现一个简单版本的线程池。重在了解线程池工作的核心思想、熟悉多线程编程、了解死锁问题。
+## 本项目是实现一个简单版本的线程池。重在了解线程池工作的核心思想、熟悉多线程编程。
 本项目是在**Linux**平台上实现的基础线程池，主要参考链接：https://blog.csdn.net/weixin_45834799/article/details/121475731  
 ##
 关于并发编程，有一些核心概念：  
@@ -72,7 +72,7 @@ while(1) {
             pool->exitNum--;
             if(pool->liveNum > pool->minNum) {
                 pool->liveNum--;
-                pthread_mutex_unlock(&pool->poolMutex);//观察死锁现象
+                pthread_mutex_unlock(&pool->poolMutex);
                 pool->threadExit();
             }
         } 
@@ -200,3 +200,13 @@ int main()
     return 0;
 }
 ```
+可以从下图看到，线程的创建过程（不是一起创建的，每次最多创建2个）：最开始有3个初始工作线程，而工作线程最大是10个，所以一共创建了如下的7个工作线程  
+![](https://github.com/2351889401/ThreadPool/blob/main/images/thread_create.png)  
+而“管理者线程”在所有任务结束后开始销毁线程，如下图：从10个工作线程销毁到最少的3个，一共销毁了7个线程  
+![](https://github.com/2351889401/ThreadPool/blob/main/images/thread_exit.png)  
+最终，“**test**”程序运行到线程池的析构函数：
+```
+delete pool;
+```
+将剩余的3个工作线程销毁：  
+![](https://github.com/2351889401/ThreadPool/blob/main/images/xigou.png)  
