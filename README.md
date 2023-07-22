@@ -57,7 +57,7 @@ g++ test.cpp -o test -lpthread
       pthread_create(&workerIDs[i], NULL, worker, this);
   }
 ```
-**2.** 每当向任务队列添加任务时，通过条件变量（**pthread_cond_t**） “**notEmpty**” 去唤醒（**pthread_cond_signal()**）等待任务的工作线程
+**2.** 每当向任务队列添加任务时，通过条件变量 “**notEmpty**” 去唤醒（**pthread_cond_signal()**）等待任务的工作线程
 ```
   m_taskQ->addTask(task);
   pthread_cond_signal(&notEmpty);
