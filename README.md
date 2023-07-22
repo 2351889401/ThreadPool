@@ -189,7 +189,7 @@ void func(void* arg) {
 
 int main()
 {
-    ThreadPool<int>* pool = new ThreadPool<int>(3, 10);
+    ThreadPool<int>* pool = new ThreadPool<int>(3, 10); //线程池中工作线程数量最少3个 最大10个
     int* x = new int[100];
     for(int i=0; i<100; i++) {
         x[i] = i + 100;
