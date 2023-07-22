@@ -145,7 +145,7 @@ while(!pool->shutdown) {
 
 }
 ```
-**5.** 线程的终止函数（通过**pthread_exit()**函数的调用）  
+**5.** 线程的终止函数（通过pthread_exit()函数的调用）  
 ```
 pthread_t tid = pthread_self();
 for(int i=0; i<maxNum; i++) {
