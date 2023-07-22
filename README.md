@@ -35,7 +35,7 @@ g++ test.cpp -o test -lpthread
   minNum = min; //最少的工作线程数量
   maxNum = max; //最大的工作线程数量
   busyNum = 0; //处于工作状态的工作线程数量
-  liveNum = min; //因为这里我们将要创建min个初始线程
+  liveNum = min; //当前存活的线程数量 因为这里我们开始时将要创建min个初始线程
   exitNum = 0; //本次要销毁的空闲线程数量
   if((m_taskQ = new taskQueue<T>) == nullptr) { //创建等待队列
       cout << "malloc taskQ failed..." << endl;    
