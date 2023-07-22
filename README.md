@@ -28,15 +28,15 @@ g++ test.cpp -o test -lpthread
 再比如对于线程池状态的统计，如果一些描述状态的变量不是互斥访问的，得到的线程池状态可能是不对的，因此会根据错误的状态做出错误的决策，导致线程池崩溃。  
 ##
 # 项目实现
-**1.** 线程池的初始化  
+**1.** 线程池的初始化（类中定义的变量直接在这里介绍了）  
 创建等待队列、创建（**pthread_create()**）一个管理者线程（管理者线程用来监督线程池状态，实现工作线程的动态销毁和创建）和多个工作线程（通过循环，取出等待队列的任务执行，直到线程终止）、初始化互斥量（**pthread_mutex_t**）和条件变量（**pthread_cond_t**，因为工作线程可能处于等待状态，直到有任务来将它唤醒）
 ```
-  shutdown = false;
-  minNum = min;
-  maxNum = max;
-  busyNum = 0;
+  shutdown = false; //线程池是否关闭
+  minNum = min; //最少的工作线程数量
+  maxNum = max; //最大的工作线程数量
+  busyNum = 0; //处于工作状态的工作线程数量
   liveNum = min; //因为这里我们将要创建min个初始线程
-  exitNum = 0;
+  exitNum = 0; //本次要销毁的空闲线程数量
   if((m_taskQ = new taskQueue<T>) == nullptr) { //创建等待队列
       cout << "malloc taskQ failed..." << endl;    
       break;
