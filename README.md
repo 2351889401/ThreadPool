@@ -62,7 +62,8 @@ g++ test.cpp -o test -lpthread
   m_taskQ->addTask(task);
   pthread_cond_signal(&notEmpty);
 ```
-**3.** 工作线程的执行流程：一开始竞争互斥锁；之后如果有任务去执行任务，没有任务则进入空闲状态，在循环中等待唤醒；每次的唤醒信号，只有一个工作线程可以接收，该工作线程处于下面代码中的“等待（**pthread_cond_wait()**）”状态
+**3.** 工作线程的执行流程：一开始竞争互斥锁；之后如果有任务去执行任务；没有任务则进入空闲状态，在循环中等待唤醒。  
+每次的唤醒信号，只有一个工作线程可以接收，该工作线程处于下面代码中的“等待（**pthread_cond_wait()**）”状态
 ```
 while(1) {
     pthread_mutex_lock(&pool->poolMutex);
